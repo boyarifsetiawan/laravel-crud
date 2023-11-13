@@ -20,7 +20,7 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        //
+        return view('Employee.Create');
     }
 
     /**
@@ -28,7 +28,9 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $employee = $request->all();
+
+        dd($employee);
     }
 
     /**
