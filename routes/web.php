@@ -21,6 +21,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [EmployeeController::class, 'index'])->name('home');
-Route::get('/create-employee', [EmployeeController::class, 'create'])->name('employee.create');
-Route::post('/store-employee', [EmployeeController::class, 'store'])->name('employee.store');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/home', [EmployeeController::class, 'index'])->name('home');
+    Route::get('/create-employee', [EmployeeController::class, 'create'])->name('employee.create');
+    Route::post('/store-employee', [EmployeeController::class, 'store'])->name('employee.store');
+});
