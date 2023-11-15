@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EmployeeRequest;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,8 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        //
+        $employees = Employee::all();
+        return view('home', compact('employees'));
     }
 
     /**
@@ -26,11 +28,13 @@ class EmployeeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(EmployeeRequest $request)
     {
-        $employee = $request->all();
 
-        dd($employee);
+        Employee::create($request->all());
+
+        return redirect()->route('home')
+            ->with('success', 'Employee created successfully.');
     }
 
     /**
