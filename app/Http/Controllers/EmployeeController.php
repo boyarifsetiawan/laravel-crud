@@ -6,6 +6,8 @@ use App\Http\Requests\EmployeeRequest;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 
+use function Laravel\Prompts\alert;
+
 class EmployeeController extends Controller
 {
     /**
@@ -40,25 +42,23 @@ class EmployeeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Employee $employee)
+    public function edit(Employee $employee, $id)
     {
-        //
+        $employee = Employee::find($id);
+
+        return view('Employee.Edit', compact('employee'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Employee $employee)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Employee $employee)
+    public function update(EmployeeRequest $request, Employee $employee)
     {
-        //
+        $employee = Employee::find($employee->id);
+        $employee->update($request->all());
+
+        return redirect()->route('home')->with('success', 'Employee updated successfully.');
     }
 
     /**
@@ -66,6 +66,8 @@ class EmployeeController extends Controller
      */
     public function destroy(Employee $employee)
     {
-        //
+        $employee = Employee::find($employee->id);
+        $employee->delete();
+        return redirect()->route('home')->with('success', 'Employee deleted successfully.');
     }
 }

@@ -4,6 +4,11 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
+            @if ($message = Session::get('success'))
+                    <div class="alert alert-success">
+                        <p>{{ $message }}</p>
+                    </div>
+                @endif
             <div class="card">
                 <div class="card-header">{{ __('Employee') }}</div>
                 <div class="col m-3">
@@ -30,16 +35,14 @@
                             <td>{{ $item->umur }}</td>
                             <td>{{ $item->alamat }}</td>
                             <td>
-                                <form action="" method="POST">
+                                <form action="{{ route('employee.destroy',$item->id) }}" method="POST">
                 
-                                    <a class="btn btn-info" href="">Show</a>
-                    
-                                    <a class="btn btn-primary" href="">Edit</a>
+                                    <a class="btn btn-warning" href="{{ route('employee.edit', $item->id) }}">Edit</a>
                 
                                     @csrf
                                     @method('DELETE')
                     
-                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                    <button type="submit" onclick="return confirm('Are you sure?')" class="btn btn-danger">Delete</button>
                                 </form>
                             </td>
                         </tr>
